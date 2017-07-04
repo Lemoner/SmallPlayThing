@@ -16,10 +16,10 @@ public class DownloadFile
   
         conn.setConnectTimeout(3000);  
   
-//		conn.setRequestProperty("User-Agent", "Mozilla/4.0 (compatible; MSIE 5.0; Windows NT; DigExt)");
+		conn.setRequestProperty("User-Agent", "Mozilla/4.0 (compatible; MSIE 5.0; Windows NT; DigExt)");
 
-		conn.setRequestProperty("User-Agent",
-				"Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36");
+//		conn.setRequestProperty("User-Agent",
+//				"Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36");
 
         InputStream inputStream = conn.getInputStream();  
   

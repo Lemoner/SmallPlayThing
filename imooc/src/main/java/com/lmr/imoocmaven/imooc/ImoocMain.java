@@ -17,12 +17,19 @@ public class ImoocMain {
   
     static int curruntGlobalCount;  
   
-    public static void main(String[] args) throws Exception {  
+    public static void main(String[] args) throws Exception { 
+
+		int a[] = new int[] { 146, 415, 257, 165, 145, 161 };
+		int aindex=0;
+
         while (true) {  
             curruntCount = 0;  
             curruntGlobalCount = 0;  
   
-            int classNo = GetInput.getInputClassNo();  
+//            int classNo = GetInput.getInputClassNo();  
+            
+            int classNo=a[aindex++];
+            
             Document doc = Jsoup.connect("http://www.imooc.com/learn/" + classNo).get();  
             String title = doc.getElementsByTag("h2").html();  
             Elements videos = doc.select(".video a");  
@@ -41,17 +48,13 @@ public class ImoocMain {
                 System.out.println("本次要下载的视频课程有 " + count + " 节\n");  
 //                int videoDef = GetInput.getInputVideoDef();  
                 int videoDef = 0;   //这里默认下载超清的  
-                String savePath = "./download/" + title + "/";  
+                String savePath = "D:/download/" + title + "/";  
                 File file = new File(savePath);  
                 file.mkdirs();  
                 System.out.println("\n准备开始下载，请耐心等待…\n");  
-                int index=0;
                 for (Element video : videos) {  
-					String[] videoNos = video.attr("href").split("/");
-					index++;
-					if (index < 7) {
-						continue;
-					}
+                    String[] videoNos = video.attr("href").split("/");  
+  
                     //只下载视频  
                     if (videoNos.length > 1 && videoNos[1].equals("video")) {  
                         video.select("button").remove();  
@@ -67,8 +70,13 @@ public class ImoocMain {
                         JSONObject jsonObject = new JSONObject(jsonData);  
                         JSONArray mpath = jsonObject.optJSONObject("data")  
                                 .optJSONObject("result").optJSONArray("mpath");  
-                        String downloadPath = mpath.getString(videoDef).trim();  
-  
+                        String downloadPath = mpath.getString(videoDef).trim(); 
+//                        System.out.println(downloadPath);
+                        downloadPath=downloadPath.replace("www.imooc.com", "v2.mukewang.com");
+                        downloadPath=downloadPath.replace("v2.mukewang.com", "v1.mukewang.com");
+                        downloadPath=downloadPath.substring(0, downloadPath.indexOf("?"));
+                        downloadPath=downloadPath.replace("L.mp4", "H.mp4");
+//                        System.out.println(downloadPath);
                         DownloadFile.downLoadFromUrl(downloadPath, videoName + ".mp4",  
                                 savePath);  
   
