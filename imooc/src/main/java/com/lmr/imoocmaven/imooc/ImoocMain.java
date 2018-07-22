@@ -9,7 +9,8 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;  
 import org.jsoup.select.Elements;  
   
-import java.io.File;  
+import java.io.File;
+import java.io.FileNotFoundException;  
   
 public class ImoocMain {  
   
@@ -19,7 +20,7 @@ public class ImoocMain {
   
     public static void main(String[] args) throws Exception { 
 
-		int a[] = new int[] { 146, 415, 257, 165, 145, 161 };
+		int a[] = new int[] { 171 };
 		int aindex=0;
 
         while (true) {  
@@ -70,19 +71,31 @@ public class ImoocMain {
                         JSONObject jsonObject = new JSONObject(jsonData);  
                         JSONArray mpath = jsonObject.optJSONObject("data")  
                                 .optJSONObject("result").optJSONArray("mpath");  
-                        String downloadPath = mpath.getString(videoDef).trim(); 
+                        String downloadPath = mpath.getString(videoDef).trim();
 //                        System.out.println(downloadPath);
                         downloadPath=downloadPath.replace("www.imooc.com", "v2.mukewang.com");
                         downloadPath=downloadPath.replace("v2.mukewang.com", "v1.mukewang.com");
-                        downloadPath=downloadPath.substring(0, downloadPath.indexOf("?"));
+//                        downloadPath=downloadPath.substring(0, downloadPath.indexOf("?"));
                         downloadPath=downloadPath.replace("L.mp4", "H.mp4");
 //                        System.out.println(downloadPath);
-                        DownloadFile.downLoadFromUrl(downloadPath, videoName + ".mp4",  
-                                savePath);  
-  
+                        
+                        
+                        int flag=1;
+                        try {
+                        	DownloadFile.downLoadFromUrl(downloadPath, videoName + ".mp4",  
+                                    savePath); 
+						} catch (FileNotFoundException e) {
+							// TODO: handle exception
+							flag=0;
+							System.out.println("【" + curruntCount + "】：\t" + videoName +  
+	                                " \t下载失败！");  
+						}
+                        
                         curruntCount += 1;  
-                        System.out.println("【" + curruntCount + "】：\t" + videoName +  
-                                " \t下载成功！");  
+                        if(flag==1){
+                        	System.out.println("【" + curruntCount + "】：\t" + videoName +  
+                                    " \t下载成功！");  
+                        }
                     }  
                 }  
   

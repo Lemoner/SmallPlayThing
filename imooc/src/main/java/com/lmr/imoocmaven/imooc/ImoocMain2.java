@@ -69,8 +69,8 @@ public class ImoocMain2 {
                         System.out.println("http://www.imooc.com/course/ajaxmediainfo/?mid=" +  
                                 videoNo + "&mode=flash"+" "+downloadPath+"  "+videoName + ".mp4");
   
-//                        DownloadFile.downLoadFromUrl(downloadPath, videoName + ".mp4",  
-//                                savePath);  
+                        DownloadFile.downLoadFromUrl(downloadPath, videoName + ".mp4",  
+                                savePath);  
   
                         curruntCount += 1;  
                         System.out.println("【" + curruntCount + "】：\t" + videoName +  
